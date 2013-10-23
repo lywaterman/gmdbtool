@@ -1,0 +1,81 @@
+{% autoescape None %}
+<html>
+	<head>
+		<title>{{ title }}</title>
+        <script src="http://ajax.microsoft.com/ajax/jQuery/jquery-1.10.2.js" type="text/javascript"></script>
+        <script type="text/javascript">
+          $(document).change(function() {
+            if ($("#info").attr("oid") == 0) {
+                $("#change_gold").hide()
+            }
+            else {
+                $("#change_gold").show()
+            }
+          })
+          $(document).ready(function(){
+
+            if ($("#info").attr("oid") == 0) {
+                $("#change_gold").hide()
+            }
+
+            $("#gold_button").click(function(e) {
+                gold = $("#gold_input").val()
+                $.post("change_gold", {"gold":gold, "oid":($("#info").attr("oid"))}, function(data)
+                {
+                    $("#info").replaceWith(data)
+                    console.log($("#info").attr("oid"))
+
+                    if ($("#info").attr("oid") == 0) {
+                       $("#change_gold").hide()
+                     }
+                    else {
+                       $("#change_gold").show()
+                    }
+                }
+                )
+            })
+
+            $("#query_button").click(function(e) {
+                oid_input_value = $("#oid_input").val()
+                $.post("query_info", {oid:oid_input_value}, function(data)
+                {
+                   $("#info").replaceWith(data)
+                   console.log($("#info").attr("oid"))
+
+                    if ($("#info").attr("oid") == 0) {
+                       $("#change_gold").hide()
+                     }
+                    else {
+                       $("#change_gold").show()
+                    }
+                }
+               )
+            })
+          
+          });
+        </script>
+        <link rel="stylesheet" type="text/css" href="/static/css/highlight.css">
+        <style type="text/css">
+          div#info {float:left;}
+          div#op {float:left;}
+        </style>
+	</head>
+	<body>
+        <div id="op">
+            <div id=query_info>
+              <p>query_info<br><input id=oid_input type="text" name="oid"></p>
+              <input id=query_button value="提交" type="button">
+            </div>
+            <div id=change_gold>
+              <p>change_gold<br><input id=gold_input type="text" name="gold"></p>
+              <input id=gold_button value="提交" type="button">
+            </div>
+        </div>
+
+        <div id="info_hold">
+        <div id="info" oid={{ oid }}>
+		  {{ body }}
+        </div>
+        </div>
+	</body>
+</html>
