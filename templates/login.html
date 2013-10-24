@@ -51,6 +51,63 @@
                 }
                )
             })
+
+            $("#change_button").click(function(e) {
+                key_input_value = $("#key_input").val()
+                value_input_value= $("#value_input").val()
+
+                $.post("change_any", {"key":key_input_value, value:value_input_value, "oid":($("#info").attr("oid"))}, function(data)
+                {
+                    $("#info").replaceWith(data)
+
+                    if ($("#info").attr("oid") == 0) {
+                       $("#change_gold").hide()
+                     }
+                    else {
+                       $("#change_gold").show()
+                    }
+                }
+                )
+
+            })
+
+            $("#change_button_boolean").click(function(e) {
+                key_input_value = $("#key_input_boolean").val()
+                value_input_value= $("#value_input_boolean").val()
+
+                $.post("change_any_boolean", {"key":key_input_value, value:value_input_value, "oid":($("#info").attr("oid"))}, function(data)
+                {
+                    $("#info").replaceWith(data)
+
+                    if ($("#info").attr("oid") == 0) {
+                       $("#change_gold").hide()
+                     }
+                    else {
+                       $("#change_gold").show()
+                    }
+                }
+                )
+
+            })
+          $("#change_button_string").click(function(e) {
+                key_input_value = $("#key_input_string").val()
+                value_input_value= $("#value_input_string").val()
+
+                $.post("change_any_string", {"key":key_input_value, value:value_input_value, "oid":($("#info").attr("oid"))}, function(data)
+                {
+                    $("#info").replaceWith(data)
+
+                    if ($("#info").attr("oid") == 0) {
+                       $("#change_gold").hide()
+                     }
+                    else {
+                       $("#change_gold").show()
+                    }
+                }
+                )
+
+            })
+
           
           });
         </script>
@@ -63,12 +120,27 @@
 	<body>
         <div id="op">
             <div id=query_info>
-              <p>query_info<br><input id=oid_input type="text" name="oid"></p>
+              <p>query_info<br><input id=oid_input type="text"></p>
               <input id=query_button value="提交" type="button">
             </div>
             <div id=change_gold>
-              <p>change_gold<br><input id=gold_input type="text" name="gold"></p>
+              <p>change_gold<br><input id=gold_input type="text"></p>
               <input id=gold_button value="提交" type="button">
+              <p>change_any_number: example: gold 1002 or achievement.25.count 3<br>
+              <input id=key_input type="text">
+              <input id=value_input type="text"></p>
+              <input id=change_button value="提交" type="button">
+
+              <p>change_any_boolean: example: achievement.25.complete false<br>
+              <input id=key_input_boolean type="text">
+              <input id=value_input_boolean type="text"></p>
+              <input id=change_button_boolean value="提交" type="button">
+
+              <p>change_any_string: example: name "大便王"<br>
+              <input id=key_input_string type="text">
+              <input id=value_input_string type="text"></p>
+              <input id=change_button_string value="提交" type="button">
+
             </div>
         </div>
 
