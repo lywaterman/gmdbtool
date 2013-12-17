@@ -27,17 +27,15 @@ settings = {'debug' : True,
             'static_path':os.path.join(os.path.dirname(__file__), "static")
             }
 
-limited_ip='1234'
+limited_ip='221.237.5.113'
+db_host='10.161.131.86'
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-	global limited_ip
-	if (self.request.remote_ip != limited_ip):
-	    return
-
 	print self.request.remote_ip
 	global limited_ip
 	if (self.request.remote_ip != limited_ip):
 	    return
+
         self.render("login.html", title="MyTitle", body='', oid=0)
 
 class LoginHandler(tornado.web.RequestHandler):
@@ -52,8 +50,9 @@ class QueryInfoHandler(tornado.web.RequestHandler):
 	if (self.request.remote_ip != limited_ip):
 	    return
 
+	global db_host
         oid = int(self.get_argument('oid'))
-        client = MongoClient('localhost', 18188)
+        client = MongoClient(db_host, 18188)
         db = client.flower
         doc = db.info.find_one({u"oid":oid}, {u"_id":0})
 
@@ -87,8 +86,8 @@ def make_change(handler, oid, key, value):
     if key == 'oid' or key == 'id' or key == 'idtype':
         handler.render("infodiv.html", body="key不能是oid, id, idtype", oid=oid)
         return
-        
-    client = MongoClient('localhost', 18188)
+    global db_host    
+    client = MongoClient(db_host, 18188)
     db = client.flower
     ##key = unicode(key, "utf-8")
     ## 保存gm操作
