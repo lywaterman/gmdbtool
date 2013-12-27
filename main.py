@@ -33,7 +33,7 @@ class MainHandler(tornado.web.RequestHandler):
     def get(self):
 	print self.request.remote_ip
 	global limited_ip
-	if (self.request.remote_ip != limited_ip):
+	if (self.request.remote_ip != limited_ip and limited_ip != 'none'):
 	    return
 
         self.render("login.html", title="MyTitle", body='', oid=0)
@@ -47,7 +47,7 @@ class LoginHandler(tornado.web.RequestHandler):
 class QueryInfoHandler(tornado.web.RequestHandler):
     def post(self):
 	global limited_ip
-	if (self.request.remote_ip != limited_ip):
+	if (self.request.remote_ip != limited_ip and limited_ip != 'none'):
 	    return
 
 	global db_host
@@ -67,7 +67,7 @@ class QueryInfoHandler(tornado.web.RequestHandler):
 class ChangeGoldHandler(tornado.web.RequestHandler):
     def post(self):
 	global limited_ip
-	if (self.request.remote_ip != limited_ip):
+	if (self.request.remote_ip != limited_ip and limited_ip != 'none'):
 	    return
 
         oid = int(self.get_argument('oid'))
@@ -80,7 +80,7 @@ class ChangeGoldHandler(tornado.web.RequestHandler):
             
 def make_change(handler, oid, key, value):
     global limited_ip 
-    if (handler.request.remote_ip != limited_ip):
+    if (handler.request.remote_ip != limited_ip  and limited_ip != 'none'):
 	return
 
     if key == 'oid' or key == 'id' or key == 'idtype':
@@ -111,7 +111,7 @@ def make_change(handler, oid, key, value):
 class ChangeAnyHandler(tornado.web.RequestHandler):
     def post(self):
 	global limited_ip
-	if (self.request.remote_ip != limited_ip):
+	if (self.request.remote_ip != limited_ip and limited_ip != 'none'):
 	    return
         oid = int(self.get_argument('oid'))
         key = self.get_argument('key')
@@ -126,7 +126,7 @@ class ChangeAnyHandler(tornado.web.RequestHandler):
 class ChangeAnyBooleanHandler(tornado.web.RequestHandler):
    def post(self):
        global limited_ip
-       if (self.request.remote_ip != limited_ip):
+       if (self.request.remote_ip != limited_ip and limited_ip != 'none'):
            return
        oid = int(self.get_argument('oid'))
        key = self.get_argument('key')
@@ -141,7 +141,7 @@ class ChangeAnyBooleanHandler(tornado.web.RequestHandler):
 class ChangeAnyStringHandler(tornado.web.RequestHandler):
    def post(self):
        global limited_ip
-       if (self.request.remote_ip != limited_ip):
+       if (self.request.remote_ip != limited_ip and limited_ip != 'none'):
            return
 
        oid = int(self.get_argument('oid'))
