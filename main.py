@@ -27,7 +27,7 @@ settings = {'debug' : True,
             'static_path':os.path.join(os.path.dirname(__file__), "static")
             }
 
-limited_ip='221.237.5.113'
+limited_ip='118.113.51.226'
 db_host='10.161.131.86'
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -76,8 +76,37 @@ class ChangeGoldHandler(tornado.web.RequestHandler):
         print oid
         print newgold
 
-        make_change(self, oid, "gold", newgold)
-            
+        make_inc(self, oid, "gold", newgold)
+ 
+def make_inc(handler, oid, key, value):
+    global limited_ip 
+    if (handler.request.remote_ip != limited_ip):
+	return
+
+    if key == 'oid' or key == 'id' or key == 'idtype':
+        handler.render("infodiv.html", body="key不能是oid, id, idtype", oid=oid)
+        return
+    global db_host    
+    client = MongoClient(db_host, 18188)
+    db = client.flower
+    ##key = unicode(key, "utf-8")
+    ## 保存gm操作
+    doclast = db.info.find_one({u"oid":oid}, {u"_id":0})
+    doclast[u'gmop'] = {u'key': key, u'value':value, u'time':datetime.now(), u'op':u'inc'}
+    db.gmop.insert(doclast)
+    
+    db.info.update({u"oid": oid}, {u"$inc":{key : value}})
+    
+    doc = db.info.find_one({u"oid":oid}, {u"_id":0})
+    
+    if doc == None:
+        oid = 0
+        
+    jsoncode = json.dumps(doc, sort_keys=True, indent=4, ensure_ascii=False)
+    htmlcode = highlight(jsoncode, JsonLexer(encoding='utf-8'), HtmlFormatter(encoding='utf-8', cssclass="highlight"))
+    
+    handler.render("infodiv.html", body=htmlcode, oid=oid)
+           
 def make_change(handler, oid, key, value):
     global limited_ip 
     if (handler.request.remote_ip != limited_ip):
