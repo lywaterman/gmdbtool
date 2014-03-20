@@ -2,144 +2,162 @@
 <html lang="zh-CN">
 	<head>
 		<title>{{ title }}</title>
-        <script src="http://ajax.microsoft.com/ajax/jQuery/jquery-1.10.2.js" type="text/javascript"></script>
-        <script type="text/javascript">
-          $(document).change(function() {
-            if ($("#info").attr("oid") == 0) {
-                $("#change_gold").hide()
-            }
-            else {
-                $("#change_gold").show()
-            }
-          })
-          $(document).ready(function(){
+		<script src="http://ajax.microsoft.com/ajax/jQuery/jquery-1.10.2.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).change(function() {
+					if ($("#info").attr("oid") == 0) {
+					$("#change_gold").hide()
+					}
+					else {
+					$("#change_gold").show()
+					}
+					})
+$(document).ready(function(){
 
-            if ($("#info").attr("oid") == 0) {
-                $("#change_gold").hide()
-            }
+		if ($("#info").attr("oid") == 0) {
+		$("#change_gold").hide()
+		}
 
-            $("#gold_button").click(function(e) {
-                gold = $("#gold_input").val()
-                $.post("change_gold", {"gold":gold, "oid":($("#info").attr("oid"))}, function(data)
-                {
-                    $("#info").replaceWith(data)
-                    console.log($("#info").attr("oid"))
+		$("#gold_button").click(function(e) {
+			gold = $("#gold_input").val()
+			$.post("change_gold", {"gold":gold, "oid":($("#info").attr("oid"))}, function(data)
+				{
+				$("#info").replaceWith(data)
+				console.log($("#info").attr("oid"))
 
-                    if ($("#info").attr("oid") == 0) {
-                       $("#change_gold").hide()
-                     }
-                    else {
-                       $("#change_gold").show()
-                    }
-                }
-                )
-            })
+				if ($("#info").attr("oid") == 0) {
+				$("#change_gold").hide()
+				}
+				else {
+				$("#change_gold").show()
+				}
+				}
+				)
+			})
 
-            $("#query_button").click(function(e) {
-                oid_input_value = $("#oid_input").val()
-                $.post("query_info", {oid:oid_input_value}, function(data)
-                {
-                   $("#info").replaceWith(data)
-                   console.log($("#info").attr("oid"))
+		$("#query_button").click(function(e) {
+				oid_input_value = $("#oid_input").val()
+				$.post("query_info", {oid:oid_input_value}, function(data)
+					{
+					$("#info").replaceWith(data)
+					console.log($("#info").attr("oid"))
 
-                    if ($("#info").attr("oid") == 0) {
-                       $("#change_gold").hide()
-                     }
-                    else {
-                       $("#change_gold").show()
-                    }
-                }
-               )
-            })
+					if ($("#info").attr("oid") == 0) {
+					$("#change_gold").hide()
+					}
+					else {
+					$("#change_gold").show()
+					}
+					}
+					)
+				})
 
-            $("#change_button").click(function(e) {
-                key_input_value = $("#key_input").val()
-                value_input_value= $("#value_input").val()
+		$("#change_button").click(function(e) {
+				key_input_value = $("#key_input").val()
+				value_input_value= $("#value_input").val()
 
-                $.post("change_any", {"key":key_input_value, value:value_input_value, "oid":($("#info").attr("oid"))}, function(data)
-                {
-                    $("#info").replaceWith(data)
+				$.post("change_any", {"key":key_input_value, value:value_input_value, "oid":($("#info").attr("oid"))}, function(data)
+					{
+					$("#info").replaceWith(data)
 
-                    if ($("#info").attr("oid") == 0) {
-                       $("#change_gold").hide()
-                     }
-                    else {
-                       $("#change_gold").show()
-                    }
-                }
-                )
+					if ($("#info").attr("oid") == 0) {
+					$("#change_gold").hide()
+					}
+					else {
+					$("#change_gold").show()
+					}
+					}
+					)
 
-            })
+				})
 
-            $("#change_button_boolean").click(function(e) {
-                key_input_value = $("#key_input_boolean").val()
-                value_input_value= $("#value_input_boolean").val()
+		$("#change_button_boolean").click(function(e) {
+				key_input_value = $("#key_input_boolean").val()
+				value_input_value= $("#value_input_boolean").val()
 
-                $.post("change_any_boolean", {"key":key_input_value, value:value_input_value, "oid":($("#info").attr("oid"))}, function(data)
-                {
-                    $("#info").replaceWith(data)
+				$.post("change_any_boolean", {"key":key_input_value, value:value_input_value, "oid":($("#info").attr("oid"))}, function(data)
+					{
+					$("#info").replaceWith(data)
 
-                    if ($("#info").attr("oid") == 0) {
-                       $("#change_gold").hide()
-                     }
-                    else {
-                       $("#change_gold").show()
-                    }
-                }
-                )
+					if ($("#info").attr("oid") == 0) {
+					$("#change_gold").hide()
+					}
+					else {
+					$("#change_gold").show()
+					}
+					}
+					)
 
-            })
-          $("#change_button_string").click(function(e) {
-                key_input_value = $("#key_input_string").val()
-                value_input_value= $("#value_input_string").val()
+				})
+		$("#change_button_string").click(function(e) {
+				key_input_value = $("#key_input_string").val()
+				value_input_value= $("#value_input_string").val()
 
-                $.post("change_any_string", {"key":key_input_value, value:value_input_value, "oid":($("#info").attr("oid"))}, function(data)
-                {
-                    $("#info").replaceWith(data)
+				$.post("change_any_string", {"key":key_input_value, value:value_input_value, "oid":($("#info").attr("oid"))}, function(data)
+					{
+					$("#info").replaceWith(data)
 
-                    if ($("#info").attr("oid") == 0) {
-                       $("#change_gold").hide()
-                     }
-                    else {
-                       $("#change_gold").show()
-                    }
-                }
-                )
+					if ($("#info").attr("oid") == 0) {
+					$("#change_gold").hide()
+					}
+					else {
+					$("#change_gold").show()
+					}
+					}
+					)
 
-            })
+				})
+		$("#add_item").click(function(e) {
+				key_input_value = $("#key_input_itemid").val()
+				value_input_value= $("#value_input_count").val()
 
-          
-          });
-        </script>
-		<link rel="stylesheet" type="text/css" href="/static/css/highlight.css">
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+				$.post("add_item", {"key":key_input_value, value:value_input_value, "oid":($("#info").attr("oid"))}, function(data)
+					{
+					$("#info").replaceWith(data)
 
-		<!-- Optional theme -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+					if ($("#info").attr("oid") == 0) {
+					$("#change_gold").hide()
+					}
+					else {
+					$("#change_gold").show()
+					}
+					}
+					)
 
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-        <style type="text/css">
-          div#info {float:left;}
-		  div#op {float:left;}
-		  div#query_info {float:left;} 
-		  div#change_gold {float:left;} 
-		  div#huan1 {float:left;} 
-		  div#huan2 {float:left;} 
-		  div#huan3 {float:left;} 
-        </style>
+				})
+
+
+});
+</script>
+<link rel="stylesheet" type="text/css" href="/static/css/highlight.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<style type="text/css">
+	div#info {float:left;}
+	div#op {float:left;}
+	div#query_info {float:left;} 
+	div#change_gold {float:left;} 
+	div#huan1 {float:left;} 
+	div#huan2 {float:left;} 
+	div#huan3 {float:left;} 
+</style>
 	</head>
 	<body>
 		<div id="info_hold">
-        <div id="info" oid={{ oid }}>
-		  {{ body }}
-        </div>
-        </div>
+			<div id="info" oid={{ oid }}>
+				{{ body }}
+			</div>
+		</div>
 
 		<div id="op">
 			<div class="col-lg-2">
-            	<div id=query_info class="input-group">
+				<div id=query_info class="input-group">
 					<input id=oid_input type="text" class="form-control">
 					<span class="input-group-btn">
 						<input id=query_button value="查询信息" type="button" class="btn btn-primary">
@@ -148,45 +166,45 @@
 			</div>
 			<div id=change_gold>
 				<div class="col-lg-2">
-				<div class="input-group">
-					<input id=gold_input type="text" class="form-control">
-					<span class="input-group-btn">
-						<input id=gold_button value="增加金币" type="button" class="btn btn-primary">
-					</span>
-				</div>
-			    </div>
-				<div id=huan1>
-				<p>change_any_number: example: gold 1002 or achievement.25.count 3<br></p>
-				<div class="col-lg-2">
 					<div class="input-group">
-              	   		<input id=key_input type="text" class="form-control">
-						<input id=value_input type="text" class="form-control">
+						<input id=gold_input type="text" class="form-control">
 						<span class="input-group-btn">
-							<input id=change_button value="提交" type="button" class="btn btn-primary">
+							<input id=gold_button value="增加金币" type="button" class="btn btn-primary">
 						</span>
 					</div>
 				</div>
-			    </div>
-				
+				<div id=huan1>
+					<p>change_any_number: example: gold 1002 or achievement.25.count 3<br></p>
+					<div class="col-lg-2">
+						<div class="input-group">
+							<input id=key_input type="text" class="form-control">
+							<input id=value_input type="text" class="form-control">
+							<span class="input-group-btn">
+								<input id=change_button value="提交" type="button" class="btn btn-primary">
+							</span>
+						</div>
+					</div>
+				</div>
+
 
 				<div id=huan2>
 					<p>change_any_boolean: example: achievement.25.complete false<br> </p>
 					<div class="col-lg-2">
 						<div class="input-group">
-             			    <input id=key_input_boolean type="text" class="form-control">
+							<input id=key_input_boolean type="text" class="form-control">
 							<input id=value_input_boolean type="text" class="form-control">
 							<span class="input-group-btn">
 								<input id=change_button_boolean value="提交" type="button" class="btn btn-primary">
 							</span>
 						</div>
 					</div>
-		  		</div>
-				
+				</div>
+
 				<div id=huan3>
 					<p>change_any_string: example: name "大便王"<br></p>
 					<div class="col-lg-2">
 						<div class="input-group">
-              				<input id=key_input_string type="text" class="form-control">
+							<input id=key_input_string type="text" class="form-control">
 							<input id=value_input_string type="text" class="form-control">
 							<span class="input-group-btn">
 								<input id=change_button_string value="提交" type="button" class="btn btn-primary">
@@ -194,8 +212,19 @@
 						</div>
 					</div>
 				</div>
-            </div>
-			</div>
 
-        	</body>
+				<div id=huan4>
+					<div class="col-lg-2">
+						<div class="input-group">
+							<input id=key_input_itemid type="text" class="form-control">
+							<input id=value_input_count type="text" class="form-control">
+							<span class="input-group-btn">
+								<input id=add_item value="提交" type="button" class="btn btn-primary">
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
