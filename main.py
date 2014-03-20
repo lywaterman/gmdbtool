@@ -27,7 +27,7 @@ settings = {'debug' : True,
             'static_path':os.path.join(os.path.dirname(__file__), "static")
             }
 
-limited_ip='118.113.51.226'
+limited_ip='171.221.86.148'
 db_host='10.161.131.86'
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
