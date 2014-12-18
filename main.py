@@ -107,6 +107,36 @@ def make_inc(handler, oid, key, value):
     
     handler.render("infodiv.html", body=htmlcode, oid=oid)
 
+def reset_fucker(handler, oid, key, value):
+    global limited_ip 
+    if (handler.request.remote_ip != limited_ip and limited_ip != 'none'):
+		return
+
+    if key == 'oid' or key == 'id' or key == 'idtype':
+        handler.render("infodiv.html", body="key不能是oid, id, idtype", oid=oid)
+        return
+    global db_host    
+    client = MongoClient(db_host, 18188)
+    db = client.flower
+    ##key = unicode(key, "utf-8")
+    ## 保存gm操作
+    doclast = db.info.find_one({u"oid":oid}, {u"_id":0})
+    doclast[u'gmop'] = {u'key': key, u'value':value, u'time':datetime.now(), u'op':u'reset'}
+    db.gmop.insert(doclast)
+    
+    db.info.update({u"oid": oid}, {u"$set":{'gold': 20000, 'medal':20, 'gift.car':0, 'gift.diamond':0, 'gift.houseboat':0}})
+    
+    doc = db.info.find_one({u"oid":oid}, {u"_id":0})
+    
+    if doc == None:
+        oid = 0
+        
+    jsoncode = json.dumps(doc, sort_keys=True, indent=4, ensure_ascii=False)
+    htmlcode = highlight(jsoncode, JsonLexer(encoding='utf-8'), HtmlFormatter(encoding='utf-8', cssclass="highlight"))
+    
+    handler.render("infodiv.html", body=htmlcode, oid=oid)
+
+
 def add_item(handler, oid, key, value):
 	global limited_ip
 
@@ -127,7 +157,7 @@ def add_item(handler, oid, key, value):
     ##key = unicode(key, "utf-8")
     ## 保存gm操作
 	doclast = db.info.find_one({u"oid":oid}, {u"_id":0})
-	doclast[u'gmop'] = {u'key': key, u'value':value, u'time':datetime.now()}
+	doclast[u'gmop'] = {u'key': key, u'value':value, u'time':datetime.now(), u'op':u'addItem'}
 	db.gmop.insert(doclast)
 
 	new_key = u"bag."+key+u".id"
@@ -238,7 +268,24 @@ class AddItemHandler(tornado.web.RequestHandler):
        print key
        print value
 
+       reset_fucker(self, oid, key, value)
+
+class ResetFuckerHandler(tornado.web.RequestHandler):
+    def post(self):
+       global limited_ip
+       if (self.request.remote_ip != limited_ip and limited_ip != 'none'):
+           return
+
+       oid = int(self.get_argument('oid'))
+       key = self.get_argument('key')
+       value = self.get_argument('value')
+
+       print oid
+       print key
+       print value
+
        add_item(self, oid, key, value)
+
       
 application = tornado.web.Application([
         (r"/", MainHandler),
@@ -248,7 +295,8 @@ application = tornado.web.Application([
         (r"/change_any", ChangeAnyHandler),
         (r"/change_any_boolean", ChangeAnyBooleanHandler),
         (r"/change_any_string", ChangeAnyStringHandler),
-		(r"/add_item", AddItemHandler)
+		(r"/add_item", AddItemHandler),
+		(r"/reset_fucker", ResetFuckerHandler)
         ], **settings)
 
 if __name__ == '__main__':
