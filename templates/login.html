@@ -127,7 +127,7 @@ $(document).ready(function(){
 				})
 
 		$("#reset_fucker").click(function(e) {
-				$.post("add_item", {"key":1, value:1, "oid":($("#info").attr("oid"))}, function(data)
+				$.post("reset_fucker", {"key":1, value:1, "oid":($("#info").attr("oid"))}, function(data)
 					{
 					$("#info").replaceWith(data)
 
@@ -141,6 +141,22 @@ $(document).ready(function(){
 					)
 
 				})
+		$("#del_fucker").click(function(e) {
+				$.post("del_fucker", {"key":1, value:1, "oid":($("#info").attr("oid"))}, function(data)
+					{
+					$("#info").replaceWith(data)
+
+					if ($("#info").attr("oid") == 0) {
+					$("#change_gold").hide()
+					}
+					else {
+					$("#change_gold").show()
+					}
+					}
+					)
+
+				})
+
 
 
 
@@ -245,7 +261,7 @@ $(document).ready(function(){
 
 
 				<input id=reset_fucker value="重置玩家" type="button" class="btn btn-primary">
-
+				<input id=del_fucker value="删除玩家" type="button" class="btn btn-primary">
 							</div>
 		</div>
 	</body>
