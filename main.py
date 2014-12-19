@@ -124,7 +124,7 @@ def reset_fucker(handler, oid, key, value):
     doclast[u'gmop'] = {u'key': key, u'value':value, u'time':datetime.now(), u'op':u'reset'}
     db.gmop.insert(doclast)
     
-    db.info.update({u"oid": oid}, {u"$set":{'gold': 20000, 'medal':20, 'gift.car':0, 'gift.diamond':0, 'gift.houseboat':0}})
+    db.info.update({u"oid": oid}, {u"$set":{'locked':False, 'gold': 20000, 'medal':20, 'gift.car':0, 'gift.diamond':0, 'gift.houseboat':0}})
     
     doc = db.info.find_one({u"oid":oid}, {u"_id":0})
     
